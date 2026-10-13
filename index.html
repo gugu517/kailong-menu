@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#802e32">
+  <meta name="description" content="凯隆餐室宴席菜单定制：挑选佳肴、搭配套餐、预览并打印专属菜单。">
+  <title>凯隆餐室 · 宴席菜单</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/access-config.js"></script>
+  <script defer src="js/access.js"></script>
+  <script defer src="js/dishes.js"></script>
+  <script defer src="js/core.js"></script>
+  <script defer src="js/main.js"></script>
+</head>
+<body class="access-locked">
+  <section id="access-gate" class="access-gate" aria-labelledby="access-title">
+    <div class="access-card">
+      <span class="access-seal" aria-hidden="true">隆</span>
+      <p class="eyebrow">一席佳肴 · 静候相聚</p>
+      <h1 id="access-title" data-restaurant>凯隆餐室</h1>
+      <p class="access-subtitle">宴席菜单 · 邀请访问</p>
+      <form id="access-form">
+        <label for="access-password">访问密码</label>
+        <div class="access-input"><input id="access-password" type="password" required maxlength="100" placeholder="请输入访问密码" autocomplete="current-password" aria-describedby="access-error" aria-invalid="false"><button id="access-toggle" type="button" aria-label="显示或隐藏密码" aria-pressed="false">显示</button></div>
+        <p id="access-error" class="access-error" role="alert"></p>
+        <label class="access-remember"><input id="access-remember" type="checkbox"> 记住访问（30 天）</label>
+        <button type="submit" class="btn primary full">进入菜单 <span aria-hidden="true">→</span></button>
+      </form>
+      <p class="access-footnote">一席相聚，皆是美好。</p>
+      <noscript><p class="access-error">请启用 JavaScript 后输入密码。</p></noscript>
+    </div>
+  </section>
+  <a class="skip-link" href="#catalog">跳到菜品选择</a>
+  <header class="topbar">
+    <a href="#" class="brand"><span class="seal" aria-hidden="true">隆</span><span><strong data-restaurant>凯隆餐室</strong><small>宴 席 菜 单</small></span></a>
+    <nav aria-label="主导航"><button id="lock-access" class="quiet-btn">退出访问</button><button id="manage-btn" class="quiet-btn">菜品管理</button><button id="backup-btn" class="quiet-btn">数据备份</button><button id="settings-btn" class="quiet-btn">餐厅设置</button></nav>
+  </header>
+  <div id="storage-banner" class="storage-banner" role="status" hidden></div>
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy"><p class="eyebrow">一席佳肴 · 一生好时光</p><h1 id="hero-title">把美好，<br>盛进这一席。</h1><p class="hero-description">从第一道开席小菜，到最后一口甜蜜。<br>为重要的相聚，搭配一份专属菜单。</p><a class="btn primary" href="#catalog">开始搭配 <span aria-hidden="true">↗</span></a><div class="hero-foot"><span id="catalog-total">73 道佳肴</span><i></i><span>3 款宴席套餐</span><i></i><span>自在搭配</span></div></div>
+      <div class="hero-art" aria-hidden="true"><div class="hero-circle"></div><span class="hero-watermark">囍</span><img class="hero-photo photo-main" src="images/dishes/hot-2.jpg" alt="" width="400" height="400" fetchpriority="high"><img class="hero-photo photo-small" src="images/dishes/dessert-new-1.jpg" alt="" width="230" height="230"><div class="hero-caption"><small>佳肴相伴</small><strong>喜事成双</strong></div><span class="art-label">KAILONG · BANQUET</span></div>
+    </section>
+    <section class="sets-section" aria-labelledby="sets-title"><div class="section-heading"><div><p class="eyebrow">精心搭配</p><h2 id="sets-title">从一席好菜开始</h2></div><p>先选套餐，再按喜好调整</p></div><div id="sets-grid" class="sets-grid"></div></section>
+    <section id="catalog" class="workspace" aria-label="菜单定制">
+      <div class="catalog-panel"><div class="section-heading"><div><p class="eyebrow">随心甄选</p><h2 id="catalog-title">挑选您的佳肴</h2></div><span id="results-count" class="muted"></span></div>
+        <div class="search-row"><label class="search-box"><span aria-hidden="true">⌕</span><input type="search" id="search" placeholder="搜索菜名、食材或喜庆别名" aria-label="搜索菜品"><kbd aria-hidden="true">搜索</kbd></label><button id="selected-filter" class="filter-btn" aria-pressed="false">只看已选</button></div>
+        <div id="category-tabs" class="category-tabs" role="group" aria-label="菜品分类"></div>
+        <div id="package-view" class="package-view" hidden></div>
+        <div id="replace-banner" class="replace-banner" hidden></div>
+        <div id="dishes-grid" class="dishes-grid"></div>
+        <div id="catalog-empty" class="empty-state" hidden><span aria-hidden="true">✧</span><h3>暂时没有找到这道菜</h3><p>试试其他关键词，或切换分类。</p><button id="reset-filter" class="btn secondary">查看全部菜品</button></div>
+      </div>
+      <aside id="selection-panel" class="selection-panel" aria-labelledby="selection-title"><div class="selection-heading"><div><p class="eyebrow">您的专属搭配</p><h2 id="selection-title">这一席 <span id="selected-count">0</span></h2></div><button id="clear-selection" class="text-btn">清空</button></div><div id="set-status" class="set-status" hidden></div><div id="selected-summary" class="selected-summary"></div><div id="selected-dishes" class="selected-dishes"></div><details class="event-details"><summary>宴席信息 <span>选填</span></summary><div class="event-fields"><label>宴席名称<input id="event-title" maxlength="60" placeholder="例如：陈先生 & 林女士婚宴"></label><div class="field-pair"><label>日期<input type="date" id="event-date"></label><label>桌数<input type="number" id="event-tables" min="1" max="9999" placeholder="选填"></label></div><label>备注<textarea id="event-note" maxlength="300" rows="2" placeholder="口味、上菜或其他要求"></textarea></label></div></details><div class="selection-actions"><button id="preview-btn" class="btn primary full">预览与打印 <span aria-hidden="true">→</span></button><div class="action-pair"><button id="export-menu" class="quiet-btn">导出菜单</button><button id="import-menu" class="quiet-btn">导入菜单</button></div><p id="save-status" class="save-status" aria-live="polite">自动保存在当前浏览器</p></div></aside>
+    </section>
+  </main>
+  <footer class="footer"><div><strong data-restaurant>凯隆餐室</strong><p data-slogan>用心烹饪 · 精致宴席</p></div><a id="contact-link" href="tel:13692018313">宴席咨询 · <span data-phone>13692018313</span></a><small>一席相聚，皆是美好。</small></footer>
+  <div class="mobile-bar"><button id="view-selected" class="quiet-btn">已选 <strong id="mobile-count">0</strong> 道 <span aria-hidden="true">↑</span></button><button id="mobile-preview" class="btn primary">预览菜单</button></div>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <dialog id="preview-dialog" class="preview-dialog"><div class="dialog-toolbar"><div><p class="eyebrow">专属宴席</p><h2>菜单预览</h2></div><button class="icon-btn" data-close aria-label="关闭预览">×</button></div><div class="preview-controls"><div class="segmented" role="group" aria-label="菜单样式"><button data-style="illustrated" aria-pressed="true">图文版</button><button data-style="simple" aria-pressed="false">简洁版</button><button data-style="festive" aria-pressed="false">喜庆版</button></div><label><input id="use-alias" type="checkbox"> 使用喜庆别名</label></div><div class="paper-viewport"><div id="preview-paper"></div></div><div class="preview-footer"><p>打印窗口中可选择“另存为 PDF”</p><button id="print-btn" class="btn primary">打印 / 保存 PDF</button></div></dialog>
+  <dialog id="confirm-dialog" class="small-dialog"><div class="dialog-toolbar"><h2 id="confirm-title">确认操作</h2><button class="icon-btn" data-close aria-label="取消">×</button></div><p id="confirm-message" class="dialog-copy"></p><div id="confirm-actions" class="dialog-actions"></div></dialog>
+  <dialog id="manage-dialog" class="manage-dialog"><div class="dialog-toolbar"><div><p class="eyebrow">本地维护</p><h2>菜品管理</h2></div><button class="icon-btn" data-close aria-label="关闭菜品管理">×</button></div><div class="manager-tools"><label class="search-box"><input id="manager-search" type="search" placeholder="搜索菜名或 ID" aria-label="搜索管理中的菜品"></label><label class="check-label"><input type="checkbox" id="review-filter"> 仅看待确认</label><button id="add-dish" class="btn primary">新增菜品</button></div><p class="manager-hint">修改保存在当前浏览器。请通过“数据备份”导出，以便迁移或长期保存。</p><div id="manager-list" class="manager-list"></div></dialog>
+  <dialog id="edit-dialog" class="small-dialog"><form id="dish-form"><div class="dialog-toolbar"><h2 id="edit-title">编辑菜品</h2><button type="button" class="icon-btn" data-close aria-label="取消编辑">×</button></div><div class="form-body"><input type="hidden" id="dish-id"><div class="field-pair"><label>菜名<input id="dish-name" maxlength="60" required></label><label>分类<select id="dish-category"></select></label></div><label>喜庆别名<input id="dish-alias" maxlength="60" placeholder="选填，例如：喜得贵子"></label><label>菜品描述<textarea id="dish-description" maxlength="240" rows="3" required></textarea></label><label>待确认备注<textarea id="dish-review" maxlength="300" rows="2" placeholder="确认内容后可清空"></textarea></label><label>替换照片<input type="file" id="dish-photo" accept="image/jpeg,image/png,image/webp"></label><p class="muted">照片会自动缩小后保存。上传真实实拍后，请检查并清空已解决的待确认备注。</p><label class="check-label"><input type="checkbox" id="dish-hide-photo"> 暂不展示照片</label><img id="edit-photo-preview" class="edit-photo-preview" alt="当前菜品照片" hidden><p id="edit-error" class="form-error" role="alert"></p></div><div class="dialog-actions"><button type="button" class="btn secondary" data-close>取消</button><button type="submit" id="save-dish" class="btn primary">保存菜品</button></div></form></dialog>
+  <dialog id="settings-dialog" class="small-dialog"><form id="settings-form"><div class="dialog-toolbar"><h2>餐厅设置</h2><button type="button" class="icon-btn" data-close aria-label="取消">×</button></div><div class="form-body"><label>餐厅名称<input id="restaurant-name" required maxlength="40"></label><label>宣传语<input id="restaurant-slogan" maxlength="80"></label><label>联系电话<input id="restaurant-phone" maxlength="30" placeholder="电话或手机号码"></label><label>喜庆祝福语<input id="restaurant-blessing" maxlength="80"></label></div><div class="dialog-actions"><button type="button" class="btn secondary" data-close>取消</button><button class="btn primary" type="submit">保存设置</button></div></form></dialog>
+  <dialog id="backup-dialog" class="small-dialog"><div class="dialog-toolbar"><h2>数据备份</h2><button class="icon-btn" data-close aria-label="关闭">×</button></div><div class="form-body"><p>完整备份包含菜品、照片修改、餐厅设置和当前菜单，可在另一台设备上导入。</p><button id="export-backup" class="btn primary full">导出完整备份</button><button id="import-backup" class="btn secondary full">导入完整备份</button><hr><p class="muted">恢复默认资料会撤销本地菜品和餐厅设置的修改。建议先导出备份。</p><button id="reset-data" class="text-btn danger">恢复默认资料</button></div></dialog>
+  <input id="import-file" type="file" accept=".json,application/json" hidden>
+  <div id="print-root"></div>
+  <noscript><p class="storage-banner">请启用 JavaScript 后使用菜单定制功能。</p></noscript>
+</body>
+</html>

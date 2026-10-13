@@ -1,0 +1,905 @@
+/* 菜品资料：可在页面“菜品管理”中编辑，并导出数据备份。 */
+window.APP_DATA = {
+  "version": 1,
+  "config": {
+    "restaurant": "凯隆餐室",
+    "slogan": "用心烹饪 · 精致宴席",
+    "phone": "13692018313",
+    "blessing": "百年好合，幸福美满！"
+  },
+  "categories": [
+    {
+      "id": "cold",
+      "name": "冷菜"
+    },
+    {
+      "id": "hot",
+      "name": "热菜"
+    },
+    {
+      "id": "soup",
+      "name": "汤品"
+    },
+    {
+      "id": "staple",
+      "name": "主食小吃"
+    },
+    {
+      "id": "dessert",
+      "name": "甜点"
+    }
+  ],
+  "dishes": [
+    {
+      "id": "c1",
+      "category": "cold",
+      "name": "冰镇天麻",
+      "festiveName": "",
+      "description": "冰镇呈献，口感清爽。",
+      "image": "images/dishes/cold-1.jpg",
+      "sourceImage": "images/dishes/cold-1.jpg",
+      "reviewNote": "",
+      "originalName": "冰镇天麻"
+    },
+    {
+      "id": "c2",
+      "category": "cold",
+      "name": "冰镇鲍鱼",
+      "festiveName": "",
+      "description": "鲍鱼冰镇呈献，搭配餐厅酱料。",
+      "image": "images/dishes/cold-2.jpg",
+      "sourceImage": "images/dishes/cold-2.jpg",
+      "reviewNote": "",
+      "originalName": "冰镇鲍鱼"
+    },
+    {
+      "id": "c3",
+      "category": "cold",
+      "name": "生腌膏蟹",
+      "festiveName": "",
+      "description": "生腌呈献，鲜味浓郁。",
+      "image": "images/dishes/cold-3.jpg",
+      "sourceImage": "images/dishes/cold-3.jpg",
+      "reviewNote": "",
+      "originalName": "生腌膏蟹"
+    },
+    {
+      "id": "c4",
+      "category": "cold",
+      "name": "冰镇响锣",
+      "festiveName": "",
+      "description": "响锣冰镇呈献，口感爽弹。",
+      "image": "",
+      "sourceImage": "images/dishes/hot-14.jpg",
+      "reviewNote": "原图含龙虾造型，无法确认与冰镇响锣对应，需补拍或核对。",
+      "originalName": "冰镇响锣"
+    },
+    {
+      "id": "h1",
+      "category": "hot",
+      "name": "卤鹅拼盘",
+      "festiveName": "",
+      "description": "鹅肉配卤汁，咸香入味。",
+      "image": "images/dishes/hot-1.jpg",
+      "sourceImage": "images/dishes/hot-1.jpg",
+      "reviewNote": "",
+      "originalName": "卤鹅拼盘"
+    },
+    {
+      "id": "h2",
+      "category": "hot",
+      "name": "烧鹅拼盘",
+      "festiveName": "",
+      "description": "烧味拼盘，搭配餐厅酱料。",
+      "image": "images/dishes/hot-2.jpg",
+      "sourceImage": "images/dishes/hot-2.jpg",
+      "reviewNote": "",
+      "originalName": "烧鹅拼盘"
+    },
+    {
+      "id": "h3",
+      "category": "hot",
+      "name": "北京烤鸭",
+      "festiveName": "",
+      "description": "烤鸭搭配薄饼与酱料，皮香肉嫩。",
+      "image": "images/dishes/hot-3.jpg",
+      "sourceImage": "images/dishes/hot-3.jpg",
+      "reviewNote": "",
+      "originalName": "北京烤鸭"
+    },
+    {
+      "id": "h4",
+      "category": "hot",
+      "name": "盐焗内螺",
+      "festiveName": "",
+      "description": "盐焗呈献，咸香鲜美。",
+      "image": "images/dishes/hot-4.jpg",
+      "sourceImage": "images/dishes/hot-4.jpg",
+      "reviewNote": "“内螺”的用字和食材称谓需餐厅确认，保留原名。",
+      "originalName": "盐焗内螺"
+    },
+    {
+      "id": "h5",
+      "category": "hot",
+      "name": "皇牌烧金猪",
+      "festiveName": "",
+      "description": "烤乳猪皮酥肉嫩，适合宴席分享。",
+      "image": "images/dishes/hot-19.jpg",
+      "sourceImage": "images/dishes/hot-19.jpg",
+      "reviewNote": "",
+      "originalName": "皇牌烧金猪"
+    },
+    {
+      "id": "h6",
+      "category": "hot",
+      "name": "清蒸石斑鱼",
+      "festiveName": "",
+      "description": "传统清蒸，突出石斑鱼的鲜味。",
+      "image": "images/dishes/hot-6.jpg",
+      "sourceImage": "images/dishes/hot-6.jpg",
+      "reviewNote": "",
+      "originalName": "清蒸石斑鱼"
+    },
+    {
+      "id": "h24",
+      "category": "hot",
+      "name": "清蒸东星斑",
+      "festiveName": "",
+      "description": "传统清蒸，突出东星斑的鲜味。",
+      "image": "images/dishes/hot-24.jpg",
+      "sourceImage": "images/dishes/hot-24.jpg",
+      "reviewNote": "",
+      "originalName": "清蒸东星斑"
+    },
+    {
+      "id": "h32",
+      "category": "hot",
+      "name": "清蒸鳕鱼",
+      "festiveName": "",
+      "description": "鳕鱼清蒸呈献，口感细嫩。",
+      "image": "images/dishes/hot-32.jpg",
+      "sourceImage": "images/dishes/hot-32.jpg",
+      "reviewNote": "",
+      "originalName": "清蒸鳕鱼"
+    },
+    {
+      "id": "h7",
+      "category": "hot",
+      "name": "清蒸膏蟹",
+      "festiveName": "",
+      "description": "膏蟹清蒸呈献，鲜味浓郁。",
+      "image": "images/dishes/hot-7.jpg",
+      "sourceImage": "images/dishes/hot-7.jpg",
+      "reviewNote": "",
+      "originalName": "清蒸膏蟹"
+    },
+    {
+      "id": "h29",
+      "category": "hot",
+      "name": "肉蟹蒸意面",
+      "festiveName": "",
+      "description": "肉蟹与意面同蒸，鲜汁入面。",
+      "image": "images/dishes/hot-29.jpg",
+      "sourceImage": "images/dishes/hot-29.jpg",
+      "reviewNote": "",
+      "originalName": "肉蟹蒸意面"
+    },
+    {
+      "id": "h25",
+      "category": "hot",
+      "name": "清蒸帝王蟹",
+      "festiveName": "",
+      "description": "帝王蟹清蒸呈献，蟹肉鲜甜。",
+      "image": "images/dishes/hot-26.jpg",
+      "sourceImage": "images/dishes/hot-26.jpg",
+      "reviewNote": "帝王蟹与蜘蛛蟹两张图片的对应关系需核对。",
+      "originalName": "清蒸帝王蟹"
+    },
+    {
+      "id": "h26",
+      "category": "hot",
+      "name": "清蒸蜘蛛蟹",
+      "festiveName": "",
+      "description": "蜘蛛蟹清蒸呈献，口感鲜嫩。",
+      "image": "images/dishes/hot-25.jpg",
+      "sourceImage": "images/dishes/hot-25.jpg",
+      "reviewNote": "帝王蟹与蜘蛛蟹两张图片的对应关系需核对。",
+      "originalName": "清蒸蜘蛛蟹"
+    },
+    {
+      "id": "h8",
+      "category": "hot",
+      "name": "清蒸小青龙",
+      "festiveName": "",
+      "description": "小青龙清蒸呈献，保留鲜味。",
+      "image": "images/dishes/hot-8.jpg",
+      "sourceImage": "images/dishes/hot-8.jpg",
+      "reviewNote": "",
+      "originalName": "清蒸小青龙"
+    },
+    {
+      "id": "h9",
+      "category": "hot",
+      "name": "清蒸大花龙",
+      "festiveName": "",
+      "description": "大花龙清蒸呈献，肉质鲜嫩。",
+      "image": "images/dishes/hot-9.jpg",
+      "sourceImage": "images/dishes/hot-9.jpg",
+      "reviewNote": "",
+      "originalName": "清蒸大花龙"
+    },
+    {
+      "id": "h31",
+      "category": "hot",
+      "name": "清蒸大龙虾",
+      "festiveName": "",
+      "description": "龙虾清蒸呈献，鲜甜饱满。",
+      "image": "images/dishes/hot-31.jpg",
+      "sourceImage": "images/dishes/hot-31.jpg",
+      "reviewNote": "",
+      "originalName": "清蒸大龙虾"
+    },
+    {
+      "id": "h23",
+      "category": "hot",
+      "name": "清蒸花龙",
+      "festiveName": "",
+      "description": "花龙清蒸呈献，肉质鲜嫩。",
+      "image": "images/dishes/hot-9.jpg",
+      "sourceImage": "images/dishes/hot-9.jpg",
+      "reviewNote": "与清蒸大花龙共用照片，需确认规格差异和对应照片。",
+      "originalName": "清蒸花龙"
+    },
+    {
+      "id": "h10",
+      "category": "hot",
+      "name": "特色龙虾杯",
+      "festiveName": "",
+      "description": "龙虾杯式呈献，适合宴席分享。",
+      "image": "images/dishes/hot-13.jpg",
+      "sourceImage": "images/dishes/hot-13.jpg",
+      "reviewNote": "",
+      "originalName": "特色龙虾杯"
+    },
+    {
+      "id": "h12",
+      "category": "hot",
+      "name": "虾滑小墨斗",
+      "festiveName": "",
+      "description": "虾滑搭配小墨斗，口感鲜嫩。",
+      "image": "images/dishes/hot-11.jpg",
+      "sourceImage": "images/dishes/hot-11.jpg",
+      "reviewNote": "",
+      "originalName": "虾滑小墨斗"
+    },
+    {
+      "id": "h13",
+      "category": "hot",
+      "name": "白灼大虾",
+      "festiveName": "",
+      "description": "白灼呈献，突出虾肉的鲜甜。",
+      "image": "images/dishes/hot-12.jpg",
+      "sourceImage": "images/dishes/hot-12.jpg",
+      "reviewNote": "",
+      "originalName": "白灼大虾"
+    },
+    {
+      "id": "h15",
+      "category": "hot",
+      "name": "金鲍鲜萃汇",
+      "festiveName": "",
+      "description": "鲜鲍搭配时蔬彩豆，口感丰富。",
+      "image": "images/dishes/hot-15.jpg",
+      "sourceImage": "images/dishes/hot-15.jpg",
+      "reviewNote": "",
+      "originalName": "金鲍鲜萃汇"
+    },
+    {
+      "id": "h16",
+      "category": "hot",
+      "name": "金鲍焖玉掌",
+      "festiveName": "",
+      "description": "鲍鱼与鹅掌同焖，酱香浓郁。",
+      "image": "images/dishes/hot-16.jpg",
+      "sourceImage": "images/dishes/hot-16.jpg",
+      "reviewNote": "",
+      "originalName": "金鲍焖玉掌"
+    },
+    {
+      "id": "h17",
+      "category": "hot",
+      "name": "西兰花烩海参",
+      "festiveName": "",
+      "description": "西兰花搭配海参，鲜润入味。",
+      "image": "images/dishes/hot-17.jpg",
+      "sourceImage": "images/dishes/hot-17.jpg",
+      "reviewNote": "",
+      "originalName": "西兰花烩海参"
+    },
+    {
+      "id": "h22",
+      "category": "hot",
+      "name": "菌菇烩海参",
+      "festiveName": "",
+      "description": "菌菇搭配海参，鲜香入味。",
+      "image": "images/dishes/hot-22.jpg",
+      "sourceImage": "images/dishes/hot-22.jpg",
+      "reviewNote": "",
+      "originalName": "菌菇烩海参"
+    },
+    {
+      "id": "h18",
+      "category": "hot",
+      "name": "鲜鲍芦笋小炒",
+      "festiveName": "",
+      "description": "鲜鲍与芦笋小炒，清爽鲜香。",
+      "image": "images/dishes/hot-18.jpg",
+      "sourceImage": "images/dishes/hot-18.jpg",
+      "reviewNote": "",
+      "originalName": "鲜鲍芦笋小炒"
+    },
+    {
+      "id": "h27",
+      "category": "hot",
+      "name": "海参焖芦笋",
+      "festiveName": "",
+      "description": "海参与芦笋同焖，鲜润入味。",
+      "image": "",
+      "sourceImage": "images/dishes/hot-22.jpg",
+      "reviewNote": "与菌菇烩海参共用照片，需补充芦笋版本实拍。",
+      "originalName": "海参焖芦笋"
+    },
+    {
+      "id": "h19",
+      "category": "hot",
+      "name": "蒜蓉蒸虾",
+      "festiveName": "",
+      "description": "鲜虾搭配蒜蓉蒸制，蒜香浓郁。",
+      "image": "images/dishes/hot-5.jpg",
+      "sourceImage": "images/dishes/hot-5.jpg",
+      "reviewNote": "",
+      "originalName": "蒜蓉蒸虾"
+    },
+    {
+      "id": "h20",
+      "category": "hot",
+      "name": "雀巢果蔬虾仁",
+      "festiveName": "",
+      "description": "虾仁搭配果蔬，盛入雀巢造型。",
+      "image": "images/dishes/hot-20.jpg",
+      "sourceImage": "images/dishes/hot-20.jpg",
+      "reviewNote": "",
+      "originalName": "雀巢果蔬虾仁"
+    },
+    {
+      "id": "h21",
+      "category": "hot",
+      "name": "蒜蓉粉丝蒸扇贝",
+      "festiveName": "喜得贵子",
+      "description": "扇贝搭配粉丝与蒜蓉，鲜香入味。",
+      "image": "images/dishes/hot-21.jpg",
+      "sourceImage": "images/dishes/hot-21.jpg",
+      "reviewNote": "",
+      "originalName": "喜得贵子"
+    },
+    {
+      "id": "h34",
+      "category": "hot",
+      "name": "玉竹节蒸粉丝",
+      "festiveName": "",
+      "description": "竹蛏搭配粉丝蒸制，鲜香入味。",
+      "image": "images/dishes/hot-34.jpg",
+      "sourceImage": "images/dishes/hot-34.jpg",
+      "reviewNote": "",
+      "originalName": "玉竹节蒸粉丝"
+    },
+    {
+      "id": "h28",
+      "category": "hot",
+      "name": "时令青菜",
+      "festiveName": "",
+      "description": "当季青菜，上汤呈献。",
+      "image": "images/dishes/hot-28.jpg",
+      "sourceImage": "images/dishes/hot-28.jpg",
+      "reviewNote": "",
+      "originalName": "时令青菜"
+    },
+    {
+      "id": "h30",
+      "category": "hot",
+      "name": "什锦百合煲",
+      "festiveName": "",
+      "description": "百合搭配多种鲜蔬，清香软糯。",
+      "image": "images/dishes/hot-30.jpg",
+      "sourceImage": "images/dishes/hot-30.jpg",
+      "reviewNote": "",
+      "originalName": "什锦百合煲"
+    },
+    {
+      "id": "h60",
+      "category": "hot",
+      "name": "金瓜鲍鱼",
+      "festiveName": "",
+      "description": "菜品做法与配料待餐厅确认。",
+      "image": "",
+      "sourceImage": "images/dishes/hot-30.jpg",
+      "reviewNote": "原图与什锦百合煲相同，旧描述也相同，需补充做法及实拍。",
+      "originalName": "金瓜鲍鱼"
+    },
+    {
+      "id": "h61",
+      "category": "hot",
+      "name": "猪排芋",
+      "festiveName": "",
+      "description": "菜品做法与配料待餐厅确认。",
+      "image": "",
+      "sourceImage": "images/dishes/hot-30.jpg",
+      "reviewNote": "原图与什锦百合煲相同，旧描述也相同，菜名、做法及实拍需确认。",
+      "originalName": "猪排芋"
+    },
+    {
+      "id": "s1",
+      "category": "soup",
+      "name": "红烧鲨鱼皮盅",
+      "festiveName": "",
+      "description": "鲨鱼皮红烧呈献，口感软糯。",
+      "image": "images/dishes/soup-new-1.jpg",
+      "sourceImage": "images/dishes/soup-new-1.jpg",
+      "reviewNote": "",
+      "originalName": "红烧鲨鱼皮蛊"
+    },
+    {
+      "id": "s2",
+      "category": "soup",
+      "name": "竹笙鱼翅盅",
+      "festiveName": "",
+      "description": "竹笙与鱼翅入汤，汤味鲜润。",
+      "image": "images/dishes/soup-new-2.jpg",
+      "sourceImage": "images/dishes/soup-new-2.jpg",
+      "reviewNote": "",
+      "originalName": "竹笙鱼翅盅"
+    },
+    {
+      "id": "s3",
+      "category": "soup",
+      "name": "金汤鱼胶盅",
+      "festiveName": "",
+      "description": "鱼胶搭配金汤，口感软糯。",
+      "image": "images/dishes/soup-new-3.jpg",
+      "sourceImage": "images/dishes/soup-new-3.jpg",
+      "reviewNote": "",
+      "originalName": "金汤鱼胶蛊"
+    },
+    {
+      "id": "s14",
+      "category": "soup",
+      "name": "金汤鱼胶鱼翅盅",
+      "festiveName": "",
+      "description": "鱼胶搭配鱼翅，金汤呈献。",
+      "image": "",
+      "sourceImage": "images/dishes/soup-new-3.jpg",
+      "reviewNote": "与金汤鱼胶盅共用照片，需补充鱼胶鱼翅版本实拍。",
+      "originalName": "金汤鱼胶鱼翅蛊"
+    },
+    {
+      "id": "s4",
+      "category": "soup",
+      "name": "菜胆鱼翅盅",
+      "festiveName": "",
+      "description": "菜胆搭配鱼翅，汤味清鲜。",
+      "image": "images/dishes/soup-new-4.jpg",
+      "sourceImage": "images/dishes/soup-new-4.jpg",
+      "reviewNote": "",
+      "originalName": "菜胆鱼翅蛊"
+    },
+    {
+      "id": "s5",
+      "category": "soup",
+      "name": "鲍鱼洋参盅",
+      "festiveName": "",
+      "description": "鲍鱼与洋参入汤，鲜香醇厚。",
+      "image": "images/dishes/soup-new-5.jpg",
+      "sourceImage": "images/dishes/soup-new-5.jpg",
+      "reviewNote": "",
+      "originalName": "鲍鱼洋参蛊"
+    },
+    {
+      "id": "s6",
+      "category": "soup",
+      "name": "角螺橄榄盅",
+      "festiveName": "",
+      "description": "角螺与橄榄入汤，清香鲜润。",
+      "image": "images/dishes/soup-new-6.jpg",
+      "sourceImage": "images/dishes/soup-new-6.jpg",
+      "reviewNote": "",
+      "originalName": "角螺橄榄盅"
+    },
+    {
+      "id": "s7",
+      "category": "soup",
+      "name": "元贝竹荪盅",
+      "festiveName": "",
+      "description": "元贝与竹荪入汤，鲜甜清香。",
+      "image": "images/dishes/soup-new-7.jpg",
+      "sourceImage": "images/dishes/soup-new-7.jpg",
+      "reviewNote": "",
+      "originalName": "元贝竹荪盅"
+    },
+    {
+      "id": "s8",
+      "category": "soup",
+      "name": "竹节时蔬汤",
+      "festiveName": "",
+      "description": "竹节与时蔬入汤，清鲜爽口。",
+      "image": "",
+      "sourceImage": "images/dishes/soup-new-9.jpg",
+      "reviewNote": "与象仔酸菜汤共用照片，需核对竹节时蔬汤实拍。",
+      "originalName": "竹节时蔬汤"
+    },
+    {
+      "id": "s9",
+      "category": "soup",
+      "name": "象仔酸菜汤",
+      "festiveName": "",
+      "description": "象仔搭配酸菜，汤味鲜酸。",
+      "image": "images/dishes/soup-new-9.jpg",
+      "sourceImage": "images/dishes/soup-new-9.jpg",
+      "reviewNote": "",
+      "originalName": "象仔酸菜汤"
+    },
+    {
+      "id": "s10",
+      "category": "soup",
+      "name": "鹧鸪羊肚菌汤",
+      "festiveName": "",
+      "description": "鹧鸪与羊肚菌入汤，菌香浓郁。",
+      "image": "images/dishes/soup-new-10.jpg",
+      "sourceImage": "images/dishes/soup-new-10.jpg",
+      "reviewNote": "",
+      "originalName": "鹧鸪羊肚菌汤"
+    },
+    {
+      "id": "s13",
+      "category": "soup",
+      "name": "乌鸡羊肚菌汤",
+      "festiveName": "",
+      "description": "乌鸡与羊肚菌入汤，菌香浓郁。",
+      "image": "",
+      "sourceImage": "images/dishes/soup-new-10.jpg",
+      "reviewNote": "与鹧鸪羊肚菌汤共用照片，需补充乌鸡版本实拍。",
+      "originalName": "乌鸡羊肚菌汤"
+    },
+    {
+      "id": "s11",
+      "category": "soup",
+      "name": "土鸡参茸汤",
+      "festiveName": "",
+      "description": "土鸡搭配参茸，汤味醇厚。",
+      "image": "images/dishes/soup-new-11.jpg",
+      "sourceImage": "images/dishes/soup-new-11.jpg",
+      "reviewNote": "",
+      "originalName": "土鸡参茸汤"
+    },
+    {
+      "id": "s12",
+      "category": "soup",
+      "name": "鹧鸪石斛汤",
+      "festiveName": "",
+      "description": "鹧鸪搭配石斛，清鲜入味。",
+      "image": "",
+      "sourceImage": "images/dishes/soup-new-10.jpg",
+      "reviewNote": "与鹧鸪羊肚菌汤共用照片，需补充石斛版本实拍。",
+      "originalName": "鹧鸪石斛汤"
+    },
+    {
+      "id": "st1",
+      "category": "staple",
+      "name": "创意蔬果包",
+      "festiveName": "",
+      "description": "蔬果造型面点，色彩丰富。",
+      "image": "images/dishes/staple-1.jpg",
+      "sourceImage": "images/dishes/staple-1.jpg",
+      "reviewNote": "",
+      "originalName": "创意蔬果包"
+    },
+    {
+      "id": "st2",
+      "category": "staple",
+      "name": "什锦炒面",
+      "festiveName": "",
+      "description": "炒面搭配多种配料，咸香入味。",
+      "image": "images/dishes/staple-2.jpg",
+      "sourceImage": "images/dishes/staple-2.jpg",
+      "reviewNote": "",
+      "originalName": "什锦炒面"
+    },
+    {
+      "id": "st3",
+      "category": "staple",
+      "name": "芡实煲",
+      "festiveName": "",
+      "description": "芡实煲制，口感软糯。",
+      "image": "images/dishes/staple-3.jpg",
+      "sourceImage": "images/dishes/staple-3.jpg",
+      "reviewNote": "",
+      "originalName": "芡实煲"
+    },
+    {
+      "id": "st12",
+      "category": "staple",
+      "name": "松仁芡实船",
+      "festiveName": "满载而归",
+      "description": "松仁搭配芡实，小船造型呈献。",
+      "image": "images/dishes/staple-11.jpg",
+      "sourceImage": "images/dishes/staple-11.jpg",
+      "reviewNote": "",
+      "originalName": "满载而归"
+    },
+    {
+      "id": "st4",
+      "category": "staple",
+      "name": "金牌虾饺",
+      "festiveName": "",
+      "description": "薄皮包裹虾馅，鲜香弹嫩。",
+      "image": "images/dishes/staple-4.jpg",
+      "sourceImage": "images/dishes/staple-4.jpg",
+      "reviewNote": "",
+      "originalName": "金牌虾饺"
+    },
+    {
+      "id": "st5",
+      "category": "staple",
+      "name": "五彩拼盘",
+      "festiveName": "",
+      "description": "多款小吃组合，口味丰富。",
+      "image": "images/dishes/staple-5.jpg",
+      "sourceImage": "images/dishes/staple-5.jpg",
+      "reviewNote": "",
+      "originalName": "五彩拼盘"
+    },
+    {
+      "id": "st6",
+      "category": "staple",
+      "name": "椒盐扇子骨",
+      "festiveName": "",
+      "description": "扇子骨搭配椒盐，外酥里嫩。",
+      "image": "images/dishes/staple-6.jpg",
+      "sourceImage": "images/dishes/staple-6.jpg",
+      "reviewNote": "",
+      "originalName": "椒盐扇子骨"
+    },
+    {
+      "id": "st7",
+      "category": "staple",
+      "name": "金瓜咸蛋",
+      "festiveName": "",
+      "description": "金瓜搭配咸蛋，咸香软糯。",
+      "image": "images/dishes/staple-7.jpg",
+      "sourceImage": "images/dishes/staple-7.jpg",
+      "reviewNote": "",
+      "originalName": "金瓜咸蛋"
+    },
+    {
+      "id": "st8",
+      "category": "staple",
+      "name": "芋泥鸭",
+      "festiveName": "",
+      "description": "芋泥搭配鸭肉，芋香浓郁。",
+      "image": "images/dishes/staple-8.jpg",
+      "sourceImage": "images/dishes/staple-8.jpg",
+      "reviewNote": "",
+      "originalName": "芋泥鸭"
+    },
+    {
+      "id": "st9",
+      "category": "staple",
+      "name": "红烧墨斗",
+      "festiveName": "",
+      "description": "墨斗红烧呈献，咸香入味。",
+      "image": "images/dishes/hot-23.jpg",
+      "sourceImage": "images/dishes/hot-23.jpg",
+      "reviewNote": "",
+      "originalName": "红烧墨斗"
+    },
+    {
+      "id": "st10",
+      "category": "staple",
+      "name": "椒盐排骨",
+      "festiveName": "",
+      "description": "排骨搭配椒盐，酥香入味。",
+      "image": "images/dishes/hot-10.jpg",
+      "sourceImage": "images/dishes/hot-10.jpg",
+      "reviewNote": "",
+      "originalName": "椒盐排骨"
+    },
+    {
+      "id": "st11",
+      "category": "staple",
+      "name": "美点双拼",
+      "festiveName": "",
+      "description": "两款特色小吃组合呈献。",
+      "image": "images/dishes/staple-10.jpg",
+      "sourceImage": "images/dishes/staple-10.jpg",
+      "reviewNote": "",
+      "originalName": "美点双拼"
+    },
+    {
+      "id": "d1",
+      "category": "dessert",
+      "name": "燕窝百年好合盅",
+      "festiveName": "",
+      "description": "燕窝搭配百合，清甜细腻。",
+      "image": "images/dishes/dessert-new-1.jpg",
+      "sourceImage": "images/dishes/dessert-new-1.jpg",
+      "reviewNote": "",
+      "originalName": "燕窝百年好合盅"
+    },
+    {
+      "id": "d2",
+      "category": "dessert",
+      "name": "芋泥燕窝盅",
+      "festiveName": "",
+      "description": "芋泥搭配燕窝，香糯细腻。",
+      "image": "images/dishes/dessert-new-2.jpg",
+      "sourceImage": "images/dishes/dessert-new-2.jpg",
+      "reviewNote": "",
+      "originalName": "芋泥燕窝盅"
+    },
+    {
+      "id": "d3",
+      "category": "dessert",
+      "name": "椰奶燕窝盅",
+      "festiveName": "",
+      "description": "椰奶搭配燕窝，椰香清甜。",
+      "image": "images/dishes/dessert-new-3.jpg",
+      "sourceImage": "images/dishes/dessert-new-3.jpg",
+      "reviewNote": "",
+      "originalName": "椰奶燕窝蛊"
+    },
+    {
+      "id": "d4",
+      "category": "dessert",
+      "name": "莲子百年好合甜汤",
+      "festiveName": "",
+      "description": "莲子搭配百合，清甜软糯。",
+      "image": "images/dishes/dessert-new-4.jpg",
+      "sourceImage": "images/dishes/dessert-new-4.jpg",
+      "reviewNote": "",
+      "originalName": "莲子百年好合甜汤"
+    },
+    {
+      "id": "d5",
+      "category": "dessert",
+      "name": "团团圆圆甜汤",
+      "festiveName": "",
+      "description": "团圆寓意甜汤，香甜呈献。",
+      "image": "images/dishes/dessert-new-5.jpg",
+      "sourceImage": "images/dishes/dessert-new-5.jpg",
+      "reviewNote": "",
+      "originalName": "团团圆圆甜汤"
+    },
+    {
+      "id": "d6",
+      "category": "dessert",
+      "name": "芋泥白果甜盘",
+      "festiveName": "",
+      "description": "芋泥搭配白果，香糯细腻。",
+      "image": "images/dishes/dessert-new-6.jpg",
+      "sourceImage": "images/dishes/dessert-new-6.jpg",
+      "reviewNote": "",
+      "originalName": "芋泥白果甜盘"
+    },
+    {
+      "id": "d7",
+      "category": "dessert",
+      "name": "糕烧金银条",
+      "festiveName": "",
+      "description": "金银条糕烧呈献，香甜软糯。",
+      "image": "images/dishes/dessert-new-7.jpg",
+      "sourceImage": "images/dishes/dessert-new-7.jpg",
+      "reviewNote": "",
+      "originalName": "糕烧金银条"
+    },
+    {
+      "id": "d8",
+      "category": "dessert",
+      "name": "樱桃露甜汤",
+      "festiveName": "",
+      "description": "樱桃露甜汤，清甜爽口。",
+      "image": "images/dishes/dessert-new-8.jpg",
+      "sourceImage": "images/dishes/dessert-new-8.jpg",
+      "reviewNote": "",
+      "originalName": "樱桃露甜汤"
+    },
+    {
+      "id": "d9",
+      "category": "dessert",
+      "name": "雪燕芒果甜汤",
+      "festiveName": "",
+      "description": "雪燕搭配芒果，清甜爽口。",
+      "image": "images/dishes/dessert-new-9.jpg",
+      "sourceImage": "images/dishes/dessert-new-9.jpg",
+      "reviewNote": "",
+      "originalName": "雪燕芒果甜汤"
+    },
+    {
+      "id": "d10",
+      "category": "dessert",
+      "name": "水果拼盘",
+      "festiveName": "",
+      "description": "当季水果组合，清爽收尾。",
+      "image": "images/dishes/dessert-new-10.jpg",
+      "sourceImage": "images/dishes/dessert-new-10.jpg",
+      "reviewNote": "",
+      "originalName": "水果拼盘"
+    }
+  ],
+  "sets": [
+    {
+      "id": "set1",
+      "name": "佳缘·美满初绽",
+      "description": "温馨相聚，经典宴席搭配。",
+      "price": 1688,
+      "dishes": [
+        "h2",
+        "st5",
+        "st11",
+        "h6",
+        "h23",
+        "h29",
+        "h15",
+        "h21",
+        "h30",
+        "s4",
+        "s13",
+        "d5",
+        "h28",
+        "d10"
+      ]
+    },
+    {
+      "id": "set2",
+      "name": "挚爱·繁花盛景",
+      "description": "佳肴满席，共享美好时刻。",
+      "price": 1888,
+      "dishes": [
+        "h2",
+        "st5",
+        "st9",
+        "h24",
+        "h9",
+        "h7",
+        "c2",
+        "h21",
+        "h27",
+        "s2",
+        "s8",
+        "d4",
+        "h28",
+        "d10"
+      ]
+    },
+    {
+      "id": "set3",
+      "name": "锦程·珍馐华典",
+      "description": "珍馐汇聚，礼遇重要时刻。",
+      "price": 2588,
+      "dishes": [
+        "h5",
+        "st5",
+        "st9",
+        "h32",
+        "h31",
+        "h7",
+        "h34",
+        "c4",
+        "h15",
+        "s14",
+        "s12",
+        "d1",
+        "h20",
+        "d10"
+      ]
+    }
+  ]
+};

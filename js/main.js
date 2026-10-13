@@ -6,7 +6,7 @@
   const escape = value => String(value ?? '').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
   const key = 'kailong-menu-v2';
   let state=C.defaultState(base), storageOK=true, category='all', query='', onlySelected=false, browsingSet=null, replacing=null, photoDraft=null, importMode='menu', noticeTimer, persistTimer;
-  let bannerMessage='', printPrepared=false, recoveryRaw=null, originalRaw=null;
+  let bannerMessage='', printPrepared=false, recoveryRaw=null, originalRaw=null, photoUploadToken=0, importToken=0, dishEditBaseline=null;
   try {
     const saved=localStorage.getItem(key);originalRaw=saved;
     if (saved) state=C.restoreState(JSON.parse(saved),base);
@@ -36,9 +36,20 @@
   function categoryName(id) {return base.categories.find(c=>c.id===id)?.name || '';}
   function name(id) {return lookup(id)?.name || base.dishes.find(d=>d.id===id)?.name || id;}
   function open(dialog) {if (!dialog.open) dialog.showModal();}
+  function editorSnapshot() {
+    return JSON.stringify({fields:['dish-name','dish-category','dish-alias','dish-description','dish-review'].map(id=>$('#'+id).value),hide:$('#dish-hide-photo').checked,photo:photoDraft!==null,processing:$('#save-dish').disabled});
+  }
+  async function requestClose(dialog) {
+    if(dialog.id==='edit-dialog' && dishEditBaseline && editorSnapshot()!==dishEditBaseline) {
+      const discard=await confirmAction('放弃本次修改？','菜品资料或照片尚未保存。返回编辑可继续修改；放弃后不会改变原菜品。',[{label:'返回编辑',value:false},{label:'放弃修改',value:true,primary:true}]);
+      if(!discard)return;
+    }
+    dialog.close();
+  }
   $$('dialog').forEach(dialog=>{
-    dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left || event.clientX>r.right || event.clientY<r.top || event.clientY>r.bottom) dialog.close();}});
-    dialog.querySelectorAll('[data-close]').forEach(btn=>btn.addEventListener('click',()=>dialog.close()));
+    dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left || event.clientX>r.right || event.clientY<r.top || event.clientY>r.bottom) requestClose(dialog);}});
+    dialog.querySelectorAll('[data-close]').forEach(btn=>btn.addEventListener('click',()=>requestClose(dialog)));
+    if(dialog.id==='edit-dialog')dialog.addEventListener('cancel',event=>{event.preventDefault();requestClose(dialog);});
   });
   function confirmAction(title,message,choices) {
     const dialog=$('#confirm-dialog');
@@ -104,6 +115,8 @@
   function renderSelection() {
     const ids=state.menu.ids;
     $('#selected-count').textContent=ids.length;$('#mobile-count').textContent=ids.length;
+    $('#preview-btn').disabled=!ids.length;$('#mobile-preview').disabled=!ids.length;$('#clear-selection').disabled=!ids.length;
+    $('#mobile-preview').textContent=ids.length?'预览菜单':'先选择菜品';
     const groups=C.groupDishes(ids,state.catalog);
     $('#selected-summary').textContent=base.categories.filter(c=>groups[c.id].length).map(c=>c.name+' '+groups[c.id].length).join(' · ') || '为这一席，挑选第一道佳肴';
     $('#selected-dishes').innerHTML=ids.length ? ids.map((id,i)=>{
@@ -145,7 +158,7 @@
   $('#selected-dishes').addEventListener('click',event=>{
     const remove=event.target.closest('[data-remove]'),replace=event.target.closest('[data-replace]');
     if(remove){state.menu.ids=state.menu.ids.filter(id=>id!==remove.dataset.remove);if(replacing===remove.dataset.remove)replacing=null;commit('已移除菜品。');}
-    if(replace){replacing=replace.dataset.replace;category=lookup(replacing).category;browsingSet=null;query='';onlySelected=false;$('#search').value='';renderCatalog();$('#catalog').scrollIntoView({behavior:'smooth'});}
+    if(replace){$('#mobile-selection-dialog').close();replacing=replace.dataset.replace;category=lookup(replacing).category;browsingSet=null;query='';onlySelected=false;$('#search').value='';renderCatalog();$('#catalog').scrollIntoView({behavior:'smooth'});}
   });
   $('#replace-banner').addEventListener('click',event=>{if(event.target.closest('#cancel-replace')){replacing=null;renderCatalog();}});
   $('#clear-selection').addEventListener('click',async()=>{
@@ -154,7 +167,19 @@
     if(yes){state.menu.ids=[];state.menu.setId=null;replacing=null;commit('已清空选择。');}
   });
   for(const field of ['title','date','tables','note']) $('#event-'+field).addEventListener('input',()=>{state.menu.event=C.normalizeEvent(Object.fromEntries(['title','date','tables','note'].map(k=>[k,$('#event-'+k).value])));persistSoon();});
-  $('#view-selected').addEventListener('click',()=>$('#selection-panel').scrollIntoView({behavior:'smooth'}));
+  $('#view-selected').addEventListener('click',()=>{
+    if(window.matchMedia('(max-width:760px)').matches){$('#mobile-selection-content').append($('#selection-panel'));open($('#mobile-selection-dialog'));}
+    else $('#selection-panel').scrollIntoView({behavior:'smooth'});
+  });
+  $('#mobile-selection-dialog').addEventListener('close',()=>$('#selection-home').append($('#selection-panel')));
+  window.matchMedia('(min-width:761px)').addEventListener('change',event=>{if(event.matches)$('#mobile-selection-dialog').close();});
+  $('#more-actions').addEventListener('click',()=>open($('#more-dialog')));
+  $('#more-dialog').addEventListener('click',event=>{const button=event.target.closest('[data-action]');if(button){$('#more-dialog').close();$('#'+button.dataset.action).click();}});
+  const phoneLayout=window.matchMedia('(max-width:760px)');
+  $('#sets-details').open=!phoneLayout.matches;
+  $('#search').placeholder=phoneLayout.matches?'搜索菜名或食材':'搜索菜名、食材或喜庆别名';
+  phoneLayout.addEventListener('change',event=>{$('#sets-details').open=!event.matches;$('#search').placeholder=event.matches?'搜索菜名或食材':'搜索菜名、食材或喜庆别名';});
+  $('#sets-details').addEventListener('toggle',()=>{$('#sets-toggle-hint').textContent=$('#sets-details').open?'收起套餐':'3 款 · 点击展开';});
   function paperHTML() {
     const {event,style,useAlias}=state.menu, config=state.config;
     const dishName=d=>useAlias&&d.festiveName?d.festiveName:d.name;
@@ -211,22 +236,23 @@
   $('#export-backup').addEventListener('click',()=>{download(filename('凯隆完整备份'),{type:'kailong-backup',...state});announce('已导出完整备份。');});
   $('#import-backup').addEventListener('click',()=>chooseImport('backup'));
   $('#import-file').addEventListener('change',async event=>{
-    const file=event.target.files[0];if(!file)return;
+    const file=event.target.files[0];if(!file)return;const token=++importToken,mode=importMode;
     try{
       if(file.size>20*1024*1024)throw new Error('文件超过 20 MB，请检查是否为本项目备份。');
       const value=JSON.parse(await file.text());
-      if(importMode==='backup'){
+      if(token!==importToken)return;
+      if(mode==='backup'){
         if(value.type!=='kailong-backup')throw new Error('请选择完整备份文件。');
         const restored=C.restoreState(value,base);
         const yes=await confirmAction('导入完整备份？','将替换当前菜品资料、餐厅设置和菜单。建议先导出当前备份。',[{label:'取消',value:false},{label:'导入并替换',value:true,primary:true}]);
-        if(!yes)return;state=restored;
+        if(!yes||token!==importToken)return;state=restored;
       } else {
         const result=C.parseMenuImport(value,state,base);
         const yes=await confirmAction('导入菜单？','将替换当前已选菜单和宴席信息。'+(result.unknown.length?'其中 '+result.unknown.length+' 道菜不在本地资料中，将跳过；如需完整恢复请导入完整备份。':''),[{label:'取消',value:false},{label:'导入菜单',value:true,primary:true}]);
-        if(!yes)return;state.menu=result.menu;
+        if(!yes||token!==importToken)return;state.menu=result.menu;
       }
       replacing=null;browsingSet=null;category='all';syncEvent();renderBrand();commit('导入成功。');if($('#manage-dialog').open)renderManager();
-    }catch(error){announce('导入失败：'+error.message);}
+    }catch(error){if(token===importToken)announce('导入失败：'+(error.name==='SyntaxError'?'文件不是有效的 JSON，请重新选择正确的菜单或备份文件。':error.message));}
   });
   $('#reset-data').addEventListener('click',async()=>{
     const yes=await confirmAction('恢复默认资料？','将撤销本地菜品和餐厅设置的修改。当前菜单中自定义菜品也会被移除。此操作无法自动撤销，请先备份。',[{label:'取消',value:false},{label:'恢复默认',value:true,primary:true}]);
@@ -242,14 +268,18 @@
   $('#manager-search').addEventListener('input',renderManager);$('#review-filter').addEventListener('change',renderManager);
   function editDish(id) {
     const d=lookup(id);
-    $('#dish-form').reset();photoDraft=null;$('#edit-error').textContent='';$('#save-dish').disabled=false;
+    photoUploadToken++;
+    $('#dish-form').reset();photoDraft=null;$('#edit-error').textContent='';$('#save-dish').disabled=false;$('#save-dish').textContent='保存菜品';
     $('#edit-title').textContent=d?'编辑菜品':'新增菜品';$('#dish-id').value=d?.id||'';
     $('#dish-name').value=d?.name||'';$('#dish-category').value=d?.category||'hot';$('#dish-alias').value=d?.festiveName||'';$('#dish-description').value=d?.description||'';$('#dish-review').value=d?.reviewNote||'';$('#dish-hide-photo').checked=d?!d.image:false;
     $('#edit-photo-preview').hidden=!d?.sourceImage;
     if(d?.sourceImage) $('#edit-photo-preview').src=d.sourceImage;else $('#edit-photo-preview').removeAttribute('src');
+    $('#photo-status').textContent='选择新照片后，点击“保存菜品”才会生效。';$('#undo-photo').hidden=true;
+    dishEditBaseline=editorSnapshot();
     open($('#edit-dialog'));
   }
   $('#dish-category').innerHTML=base.categories.map(cat=>`<option value="${cat.id}">${cat.name}</option>`).join('');
+  $('#edit-dialog').addEventListener('close',()=>{photoUploadToken++;$('#save-dish').disabled=false;$('#save-dish').textContent='保存菜品';dishEditBaseline=null;});
   $('#add-dish').addEventListener('click',()=>editDish(null));
   $('#manager-list').addEventListener('click',async event=>{
     const edit=event.target.closest('[data-edit]'),del=event.target.closest('[data-delete]');
@@ -259,21 +289,32 @@
       if(yes){state.catalog=state.catalog.filter(d=>d.id!==id);state.menu.ids=state.menu.ids.filter(value=>value!==id);if(replacing===id)replacing=null;renderBrand();commit('已删除本地菜品。');renderManager();}
     }
   });
-  $('#dish-photo').addEventListener('change',async event=>{
-    const file=event.target.files[0];if(!file)return;const button=$('#save-dish');button.disabled=true;$('#edit-error').textContent='';
+  $('#choose-photo').addEventListener('click',()=>$('#dish-photo').click());
+  $('#take-photo').addEventListener('click',()=>$('#dish-camera').click());
+  $('#undo-photo').addEventListener('click',()=>{
+    photoUploadToken++;photoDraft=null;$('#dish-photo').value='';$('#dish-camera').value='';$('#edit-error').textContent='';$('#save-dish').disabled=false;$('#save-dish').textContent='保存菜品';
+    const original=lookup($('#dish-id').value);$('#edit-photo-preview').hidden=!original?.sourceImage;if(original?.sourceImage)$('#edit-photo-preview').src=original.sourceImage;else $('#edit-photo-preview').removeAttribute('src');$('#dish-hide-photo').checked=original?!original.image:false;$('#photo-status').textContent='已撤销本次换图，其他文字修改仍保留。';$('#undo-photo').hidden=true;
+  });
+  async function uploadPhoto(event){
+    const file=event.target.files[0];if(!file)return;const token=++photoUploadToken;const button=$('#save-dish');button.disabled=true;button.textContent='正在处理照片…';$('#edit-error').textContent='';$('#photo-status').textContent='正在压缩照片，请稍候…';
     try{
-      if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>15*1024*1024) throw new Error('请选择 15 MB 以内的 JPEG、PNG 或 WebP 图片。');
+      if(!['image/jpeg','image/png','image/webp'].includes(file.type)) throw new Error('请选择 JPEG、PNG 或 WebP 格式的照片。');
+      if(file.size>15*1024*1024) throw new Error('照片超过 15 MB，请压缩后重新选择。');
       const url=URL.createObjectURL(file);
       try {
         const img=new Image();img.src=url;await img.decode();
+        if(token!==photoUploadToken) return;
         const ratio=Math.min(1,800/img.width,800/img.height);const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(img.width*ratio));canvas.height=Math.max(1,Math.round(img.height*ratio));const ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0,canvas.width,canvas.height);
-        photoDraft=canvas.toDataURL('image/jpeg',.82);
-        if(!C.safeImage(photoDraft))throw new Error('图片压缩后仍过大，请选择更小的图片。');
+        const candidate=canvas.toDataURL('image/jpeg',.82);
+        if(!C.safeImage(candidate))throw new Error('图片压缩后仍过大，请选择更小的图片。');
+        photoDraft=candidate;
         $('#edit-photo-preview').src=photoDraft;$('#edit-photo-preview').hidden=false;$('#dish-hide-photo').checked=false;
+        $('#photo-status').textContent='照片已准备好，请点击“保存菜品”完成。';$('#undo-photo').hidden=false;
       } finally {URL.revokeObjectURL(url);}
-    }catch(error){photoDraft=null;$('#edit-error').textContent=error.message;}
-    finally{button.disabled=false;}
-  });
+    }catch(error){if(token===photoUploadToken){event.target.value='';$('#photo-status').textContent='照片未更换，仍保留当前预览。';$('#edit-error').textContent=(error.name==='EncodingError'?'照片无法读取，请选择有效的图片文件。':error.message)+' 当前预览照片会保留。';}}
+    finally{if(token===photoUploadToken){button.disabled=false;button.textContent='保存菜品';}}
+  }
+  $('#dish-photo').addEventListener('change',uploadPhoto);$('#dish-camera').addEventListener('change',uploadPhoto);
   $('#dish-form').addEventListener('submit',event=>{
     event.preventDefault();if($('#save-dish').disabled)return;
     try{

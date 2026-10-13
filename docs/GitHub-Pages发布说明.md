@@ -41,4 +41,4 @@ window.MENU_ACCESS = { password: '你的新密码', rememberDays: 30 };
 
 这是轻量访问入口，适合避免普通访客随意浏览。公开仓库、网页源文件、菜品数据和图片仍可以被读取，不作为机密资料保护方式。菜单选择和资料修改仍由访客各自浏览器保存，没有联网同步。
 
-本次交付包含发布所需文件和操作说明，尚未创建 GitHub 仓库或发布网址。
+项目已发布：在线菜单为 https://gugu517.github.io/kailong-menu/ ，仓库为 https://github.com/gugu517/kailong-menu 。Pages 使用 main 分支根目录发布，开启 HTTPS。

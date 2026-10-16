@@ -1,4 +1,3 @@
-/* 菜品资料：可在页面“菜品管理”中编辑，并导出数据备份。 */
 window.APP_DATA = {
   "version": 1,
   "config": {
@@ -832,6 +831,127 @@ window.APP_DATA = {
       "sourceImage": "images/dishes/dessert-new-10.jpg",
       "reviewNote": "",
       "originalName": "水果拼盘"
+    },
+    {
+      "id": "import_20261016_01",
+      "category": "staple",
+      "name": "四味迎宾拼盘",
+      "festiveName": "四喜临门",
+      "description": "四种小点分区摆盘，适合分享。",
+      "image": "images/dishes/import-20261016-01.jpg",
+      "sourceImage": "images/dishes/import-20261016-01.jpg",
+      "reviewNote": "各小点的主料与甜咸口味待确认。",
+      "originalName": "四味迎宾拼盘"
+    },
+    {
+      "id": "import_20261016_02",
+      "category": "hot",
+      "name": "双鱼拼盘",
+      "festiveName": "双鱼呈祥",
+      "description": "双鱼并列摆盘，搭配青蔬。",
+      "image": "images/dishes/import-20261016-02.jpg",
+      "sourceImage": "images/dishes/import-20261016-02.jpg",
+      "reviewNote": "鱼种及烹饪方式待确认。",
+      "originalName": "双鱼拼盘"
+    },
+    {
+      "id": "import_20261016_03",
+      "category": "hot",
+      "name": "锦绣龙虾拼盘",
+      "festiveName": "锦绣呈祥",
+      "description": "龙虾壳与肉块组合，长盘呈献。",
+      "image": "images/dishes/import-20261016-03.jpg",
+      "sourceImage": "images/dishes/import-20261016-03.jpg",
+      "reviewNote": "具体做法、规格及份量待确认。",
+      "originalName": "锦绣龙虾拼盘"
+    },
+    {
+      "id": "import_20261016_04",
+      "category": "hot",
+      "name": "粉丝海鲜盏",
+      "festiveName": "花团锦簇",
+      "description": "粉丝与海鲜分盏摆放，花形组合。",
+      "image": "images/dishes/import-20261016-04.jpg",
+      "sourceImage": "images/dishes/import-20261016-04.jpg",
+      "reviewNote": "主体海鲜品种、酱料及烹饪方式待确认。",
+      "originalName": "粉丝海鲜盏"
+    },
+    {
+      "id": "import_20261016_05",
+      "category": "hot",
+      "name": "时蔬海鲜小炒",
+      "festiveName": "丰盛满席",
+      "description": "海鲜与蔬菜组合，舟形盛器呈献。",
+      "image": "images/dishes/import-20261016-05.jpg",
+      "sourceImage": "images/dishes/import-20261016-05.jpg",
+      "reviewNote": "海鲜与蔬菜的具体品种待确认。",
+      "originalName": "时蔬海鲜小炒"
+    },
+    {
+      "id": "import_20261016_06",
+      "category": "staple",
+      "name": "金脆切片拼盘",
+      "festiveName": "金玉满堂",
+      "description": "金黄色切片整齐排放，配以蔬菜装饰。",
+      "image": "images/dishes/import-20261016-06.jpg",
+      "sourceImage": "images/dishes/import-20261016-06.jpg",
+      "reviewNote": "主体食材及具体做法待确认。",
+      "originalName": "金脆切片拼盘"
+    },
+    {
+      "id": "import_20261016_07",
+      "category": "hot",
+      "name": "花开鲍鱼拼盘",
+      "festiveName": "花开富贵",
+      "description": "鲍鱼居中花形摆盘，周围配以彩色切片。",
+      "image": "images/dishes/import-20261016-07.jpg",
+      "sourceImage": "images/dishes/import-20261016-07.jpg",
+      "reviewNote": "配菜及供餐温度待确认；暂归热菜，可在管理中调整。",
+      "originalName": "花开鲍鱼拼盘"
+    },
+    {
+      "id": "import_20261016_08",
+      "category": "hot",
+      "name": "浓汁青蔬拼盘",
+      "festiveName": "丰收满席",
+      "description": "浓汁主菜搭配青蔬，长盘呈献。",
+      "image": "images/dishes/import-20261016-08.jpg",
+      "sourceImage": "images/dishes/import-20261016-08.jpg",
+      "reviewNote": "无法仅凭照片确定主体食材，先使用摆盘名称；请确认后修改。",
+      "originalName": "浓汁青蔬拼盘"
+    },
+    {
+      "id": "import_20261016_09",
+      "category": "hot",
+      "name": "锦绣蟹拼盘",
+      "festiveName": "鸿运满席",
+      "description": "蟹壳与蟹钳组合摆盘，配以粉丝点缀。",
+      "image": "images/dishes/import-20261016-09.jpg",
+      "sourceImage": "images/dishes/import-20261016-09.jpg",
+      "reviewNote": "蟹的品种、规格与具体做法待确认。",
+      "originalName": "锦绣蟹拼盘"
+    },
+    {
+      "id": "import_20261016_10",
+      "category": "dessert",
+      "name": "缤纷鲜果拼盘",
+      "festiveName": "甜蜜相聚",
+      "description": "水果切片与整果组合，三角盘呈献。",
+      "image": "images/dishes/import-20261016-10.jpg",
+      "sourceImage": "images/dishes/import-20261016-10.jpg",
+      "reviewNote": "",
+      "originalName": "缤纷鲜果拼盘"
+    },
+    {
+      "id": "import_20261016_11",
+      "category": "staple",
+      "name": "金黄酥球",
+      "festiveName": "团团圆圆",
+      "description": "金黄色圆形小点分盏摆放，组合呈献。",
+      "image": "images/dishes/import-20261016-11.jpg",
+      "sourceImage": "images/dishes/import-20261016-11.jpg",
+      "reviewNote": "内馅及甜咸口味待确认；暂归主食小吃。",
+      "originalName": "金黄酥球"
     }
   ],
   "sets": [

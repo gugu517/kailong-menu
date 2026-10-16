@@ -57,6 +57,13 @@
     if (value.menu.ids.length && !menu.ids.length) throw new Error('菜单中的菜品均不在当前资料中，请先导入完整备份。');
     return {menu,unknown};
   }
+  function parseCatalogImport(value, state) {
+    if (!value || value.type!=='kailong-dishes' || value.version!==1) throw new Error('请选择本项目的菜品导入文件。');
+    const incoming=validateCatalog(value.dishes);
+    const added=incoming.filter(d=>!state.catalog.some(old=>old.id===d.id));
+    if(state.catalog.length+added.length>500) throw new Error('导入后超过 500 道菜上限，请先整理菜品。');
+    return {catalog:[...state.catalog,...added],added:added.length,skipped:incoming.length-added.length};
+  }
   function packageDiff(menu, sets, catalog) {
     const set = sets.find(s=>s.id===menu.setId);
     if (!set) return null;
@@ -80,5 +87,5 @@
     const lookup = new Map(catalog.map(d=>[d.id,d]));
     return Object.fromEntries(CATEGORY_IDS.map(cat=>[cat,ids.map(id=>lookup.get(id)).filter(d=>d && d.category===cat)]));
   }
-  return {clone,text,safeImage,validateCatalog,normalizeConfig,normalizeEvent,normalizeMenu,defaultState,restoreState,parseMenuImport,packageDiff,toggle,replace,applyPackage,groupDishes};
+  return {clone,text,safeImage,validateCatalog,normalizeConfig,normalizeEvent,normalizeMenu,defaultState,restoreState,parseMenuImport,parseCatalogImport,packageDiff,toggle,replace,applyPackage,groupDishes};
 });

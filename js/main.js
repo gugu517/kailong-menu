@@ -131,7 +131,7 @@
   function syncEvent() {
     for(const field of ['title','date','tables','note']) $('#event-'+field).value=state.menu.event[field];
   }
-  function commit(message) {renderCatalog();renderSelection();persist();if(message) announce(message);}
+  function commit(message) {$('#undo-remove').hidden=true;renderCatalog();renderSelection();persist();if(message) announce(storageOK?message:'当前更改未能保存到浏览器，请立即导出完整备份。');}
   function restoreFocus(id) {requestAnimationFrame(()=>$(`[data-toggle="${id}"]`)?.focus({preventScroll:true}));}
   async function applySet(id) {
     const set=base.sets.find(s=>s.id===id);if(!set)return;
@@ -157,7 +157,8 @@
   });
   $('#selected-dishes').addEventListener('click',event=>{
     const remove=event.target.closest('[data-remove]'),replace=event.target.closest('[data-replace]');
-    if(remove){state.menu.ids=state.menu.ids.filter(id=>id!==remove.dataset.remove);if(replacing===remove.dataset.remove)replacing=null;commit('已移除菜品。');}
+    if(remove){const id=remove.dataset.remove,index=state.menu.ids.indexOf(id);state.menu.ids=state.menu.ids.filter(value=>value!==id);if(replacing===id)replacing=null;commit('已移除菜品，可在已选菜单中撤销。');
+      const undo=$('#undo-remove');undo.textContent='撤销移除「'+name(id)+'」';undo.hidden=false;undo.onclick=()=>{if(lookup(id)&&!state.menu.ids.includes(id))state.menu.ids.splice(Math.min(index,state.menu.ids.length),0,id);commit('已恢复菜品。');};}
     if(replace){$('#mobile-selection-dialog').close();replacing=replace.dataset.replace;category=lookup(replacing).category;browsingSet=null;query='';onlySelected=false;$('#search').value='';renderCatalog();$('#catalog').scrollIntoView({behavior:'smooth'});}
   });
   $('#replace-banner').addEventListener('click',event=>{if(event.target.closest('#cancel-replace')){replacing=null;renderCatalog();}});
@@ -229,9 +230,16 @@
   $('#import-menu').addEventListener('click',()=>chooseImport('menu'));
   $('#backup-btn').addEventListener('click',()=>{
     const body=$('#backup-dialog .form-body');
+    $('#add-latest-dishes').hidden=!base.dishes.some(d=>d.id.startsWith('import_20261016_')&&!lookup(d.id));
     const old=$('#raw-backup');if(old)old.remove();
     if(!storageOK || recoveryRaw){const button=document.createElement('button');button.id='raw-backup';button.className='btn secondary full';button.textContent='导出原始存储（用于恢复）';button.addEventListener('click',()=>{try{download(filename('原始存储'),{raw:recoveryRaw ?? localStorage.getItem(key),legacy:localStorage.getItem('selectedDishes')});}catch{announce('浏览器拒绝访问本地存储。');}});body.prepend(button);}
     open($('#backup-dialog'));
+  });
+  $('#add-latest-dishes').addEventListener('click',async()=>{
+    const result=C.parseCatalogImport({type:'kailong-dishes',version:1,dishes:base.dishes.filter(d=>d.id.startsWith('import_20261016_'))},state);
+    if(!result.added)return;
+    const yes=await confirmAction('添加 '+result.added+' 道新菜？','已有菜品、照片修改和已选菜单都会保留。',[{label:'取消',value:false},{label:'添加新菜',value:true,primary:true}]);
+    if(!yes)return;state.catalog=result.catalog;renderBrand();commit('新菜已添加。');$('#add-latest-dishes').hidden=true;
   });
   $('#export-backup').addEventListener('click',()=>{download(filename('凯隆完整备份'),{type:'kailong-backup',...state});announce('已导出完整备份。');});
   $('#import-backup').addEventListener('click',()=>chooseImport('backup'));
@@ -241,7 +249,12 @@
       if(file.size>20*1024*1024)throw new Error('文件超过 20 MB，请检查是否为本项目备份。');
       const value=JSON.parse(await file.text());
       if(token!==importToken)return;
-      if(mode==='backup'){
+      if(value.type==='kailong-dishes'){
+        const result=C.parseCatalogImport(value,state);
+        if(!result.added){announce('这些菜品已在资料中，无需重复导入。');return;}
+        const yes=await confirmAction('添加 '+result.added+' 道菜品？','保留现有菜品、已选菜单及餐厅设置。'+(result.skipped?'已存在的 '+result.skipped+' 道菜会跳过。':''),[{label:'取消',value:false},{label:'添加菜品',value:true,primary:true}]);
+        if(!yes||token!==importToken)return;state.catalog=result.catalog;
+      } else if(mode==='backup'){
         if(value.type!=='kailong-backup')throw new Error('请选择完整备份文件。');
         const restored=C.restoreState(value,base);
         const yes=await confirmAction('导入完整备份？','将替换当前菜品资料、餐厅设置和菜单。建议先导出当前备份。',[{label:'取消',value:false},{label:'导入并替换',value:true,primary:true}]);
@@ -316,7 +329,7 @@
   }
   $('#dish-photo').addEventListener('change',uploadPhoto);$('#dish-camera').addEventListener('change',uploadPhoto);
   $('#dish-form').addEventListener('submit',event=>{
-    event.preventDefault();if($('#save-dish').disabled)return;
+    event.preventDefault();if(!$('#edit-dialog').open||$('#save-dish').disabled)return;
     try{
       if(!$('#dish-id').value && state.catalog.length>=500) throw new Error('菜品已达到 500 道上限。');
       const id=$('#dish-id').value || ('custom_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,6));const old=lookup(id);
